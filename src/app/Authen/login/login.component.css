@@ -1,0 +1,50 @@
+body, html {
+  height: 100vh;
+}
+
+.backpage{
+  width: 100%;
+  height: 100vh;
+  /* background: linear-gradient( rgba(255, 255, 255, 0.575) 75%, #ffffffb6 100%), url('../../../../photo/photo07.jpg'); */
+  background-image: url('../../../../photo/photo03-conup-b.jpg');
+  background-position: center;
+  background-size: cover;
+}
+
+.jumbotron{
+  background: rgb(255, 255, 255);
+  border: 1px solid rgb(211, 211, 211);
+  /* margin-left: 20%;
+  margin-right: 20%;
+  padding-top: -100px;
+  padding-left: 5%;
+  padding-right: 5%; */
+}
+
+.login{
+  font-size: 2rem;
+  color: #003171;
+}
+
+.font{
+  font-size: 1.3rem;
+}
+
+.btn{
+  font-size: 1.4em;
+  width: 150px;
+}
+
+.material-icons{
+  vertical-align: -6px;
+  font-size: 1.8rem;
+}
+
+.card-head{
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+}
+.card{
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+}

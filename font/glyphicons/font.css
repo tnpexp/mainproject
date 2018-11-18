@@ -1,0 +1,18 @@
+@font-face {
+  font-family: 'GLYPHICONSHalflings-Regular';
+  src: url('GLYPHICONSHalflings-Regular.woff') format('woff'),
+       url('GLYPHICONSHalflings-Regular.ttf') format('truetype'),
+       url('GLYPHICONSHalflings-Regular.svg#GLYPHICONSHalflings-Regular') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'glyphicons-halflings-regular';
+  src: url('glyphicons-halflings-regular.eot');
+  src: url('glyphicons-halflings-regular.woff2') format('woff2'),
+       url('glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+

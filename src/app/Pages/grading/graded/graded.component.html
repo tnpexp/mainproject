@@ -1,0 +1,161 @@
+<div class="backpage">
+  <div class="Graded text-center" style="margin-top: 80px; padding-top: 20px">
+    <a>
+      <h2><i class="material-icons" style="margin-right: 5px">save</i><b>บันทึกเกรด</b></h2>
+    </a>
+  </div>
+
+  <div class="container-fluid">
+    <div class="card shadow p mb-3">
+      <form>
+        <div class="card-body">
+          <div class="row">
+            <div class="col">
+              <div class="row">
+                <div class="col-sm-7">
+                  <div style="color: #1560BD; margin-bottom: 20px">
+                    <h4><b>รูปตัวอย่างซากโค</b></h4>
+                  </div>
+                  <div class="card text-center" >
+                    <img class="card-body cardsize" src="{{picName}}" width="cover" height="500">
+                  </div>
+                </div>
+
+                <div class="col-sm-5">
+                  <div class="row mb-3">
+                    <div class="col">
+                      <label for="File1" style="color: #1560BD">
+                        <h4><b>เกรดที่ได้</b></h4>
+                      </label>
+                      <div class="card">
+                        <div class="card-body text-center">
+                          <label class="gradetext" for="File2" style="color:rgb(72, 255, 0)"><b>{{grade}}</b></label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col">
+                      <label for="File1" style="color: #1560BD">
+                        <h4><b>ชื่อพนักงานตัดเกรด</b></h4>
+                      </label>
+                      <form>
+                        <div class="form-row">
+                          <div class="form-group col">
+                            <label for="Firstname">ชื่อ</label>
+                            <input type="text" class="form-control" value="{{userfirst}}">
+                          </div>
+                          <div class="form-group col">
+                            <label for="Lastname">นามสกุล</label>
+                            <input type="text" class="form-control" value="{{userlast}}">
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-sm-4.8">
+              <div class="container">
+                <div style="color: #1560BD; margin-bottom: 20px">
+                  <h4><b>ข้อมูลโค</b></h4>
+                </div>
+                <form *ngFor="let item of data ">
+                  <!-- <fieldset disabled> -->
+                    <div class="form-row row mb-1">
+                      <label for="id" class="col-sm-2 col-form-label">รหัสโค</label>
+                      <div class="col">
+                        <input type="text" class="form-control" id="idcattle" value="{{item.id}}">
+                      </div>
+                    </div>
+                    <div class="form-row ">
+                      <label for="barcode" class="col-sm-2 col-form-label">บาร์โค้ด</label>
+                      <div class="form-group col input-group">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">ซากขาว</span>
+                        </div>
+                        <input type="text" class="form-control" id="barcode-right" value="{{item.right}}" aria-label="Dollar amount">
+                      </div>
+                      <div class="form-group col input-group">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">ซากขาว</span>
+                        </div>
+                        <input type="text" class="form-control" id="barcode-left" value="{{item.left}}" aria-label="Dollar amount">
+                      </div>
+                    </div>
+                    <div class="form-row row mb-1">
+                      <label for="date-kill" class="col-sm-2 col-form-label">วันที่เชือด</label>
+                      <div class="col">
+                        <input type="text" class="form-control" id="date-kill"
+                        value="วันที่ {{item.datekill|date: 'dd'}} / เดือน {{item.datekill|date: 'MM'}} / ปี {{item.datekill|date: 'yyyy'}}">
+                      </div>
+                    </div>
+                    <div class="form-row row mb-1">
+                      <label for="date-dry" class="col-sm-2 col-form-label">วันที่บ่ม</label>
+                      <div class="col">
+                        <input type="text" class="form-control" id="date-dry"
+                        value="วันที่ {{item.datedry|date: 'dd'}} / เดือน {{item.datedry|date: 'MM'}} / ปี {{item.datedry|date: 'yyyy'}}">
+                      </div>
+                    </div>
+                    <div class="form-row ">
+                      <label for="weight" class="col-sm-2 col-form-label">น้ำหนัก</label>
+                      <div class="form-group col input-group">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">ซากซ้าย</span>
+                        </div>
+                        <input type="text" class="form-control" id="weight-left" value="{{item.wleft}}" aria-label="Dollar amount">
+                        <div class="input-group-append">
+                          <span class="input-group-text">กิโลกรัม</span>
+                        </div>
+                      </div>
+                      <div class="form-group col input-group">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">ซากขวา</span>
+                        </div>
+                        <input type="text" class="form-control" id="weight-right" value="{{item.wright}}" aria-label="Dollar amount">
+                        <div class="input-group-append">
+                          <span class="input-group-text">กิโลกรัม</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-row row mb-1">
+                      <label for="room-dry" class="col-sm-2 col-form-label">ห้องบ่ม</label>
+                      <div class="col">
+                        <input type="text" class="form-control" id="room-dry" value="{{item.roomdry}}">
+                      </div>
+                    </div>
+                    <div class="form-row mb-1">
+                      <label for="owner" class="col-sm-2 col-form-label">เจ้าของโค</label>
+                      <div class="form-group col">
+                        <input type="text" class="form-control" id="First-own" value="{{item.firstown}}">
+                      </div>
+                      <div class="form-group col">
+                        <input type="text" class="form-control" id="Last-own" value="{{item.lastown}}">
+                      </div>
+                    </div>
+                    <!-- <div class="form-group row">
+                      <div class="col-sm-10">
+                        <button routerLink="/graded" type="button" class="btn btn-primary">ประมวลผล</button>
+                      </div>
+                    </div> -->
+                  <!-- </fieldset> -->
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+      <div class="text-center mb-3">
+        <button routerLink="/aboutcattle" type="button" class="btn btn-outline-danger pull-center" style="vertical-align:middle ;margin-right: 10px">
+          <h4><b>ยกเลิก</b></h4>
+        </button>
+        <button type="button" class="btn btn-success pull-center" style="vertical-align:middle" (click)="greaded()">
+          <h4><b>บันทึก</b></h4>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

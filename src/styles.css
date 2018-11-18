@@ -1,1 +1,125 @@
 /* You can add global styles to this file, and also import other style files */
+@import "~bootstrap/dist/css/bootstrap.css";
+@import "~font-awesome/css/font-awesome.css";
+@import "~font-awesome-5-css/css/all.css";
+
+@import url('https://fonts.googleapis.com/css?family=Mitr');
+@import url('https://fonts.googleapis.com/css?family=Kanit');
+@font-face {
+  font-family: "ThaiSansLite";
+  src: url("../font/ThaiSansLite/ThaiSansLite.eot");
+  src:
+  url("../font/ThaiSansLite/ThaiSansLite.woff") format("woff"),
+  url("../font/ThaiSansLite/ThaiSansLite.woff2") format("woff2"),
+  url("../font/ThaiSansLite/ThaiSansLite.ttf") format("ttf"),
+  url("../font/ThaiSansLite/ThaiSansLite.svg#filename") format("svg");
+}
+@font-face {
+  font-family: "Quark-Light";
+  src: url("../font/Quark-Light/Quark-Light.eot");
+  src:
+  url("../font/Quark-Light/Quark-Light.woff") format("woff"),
+  url("../font/Quark-Light/Quark-Light.woff2") format("woff2"),
+  url("../font/Quark-Light/Quark-Light.ttf") format("ttf"),
+  url("../font/Quark-Light/Quark-Light.svg#filename") format("svg");
+}
+@font-face {
+  font-family: "Quark-Bold";
+  src: url("../font/Quark-Bold/Quark-Bold.eot");
+  src:
+  url("../font/Quark-Bold/Quark-Bold.woff") format("woff"),
+  url("../font/Quark-Bold/Quark-Bold.woff2") format("woff2"),
+  url("../font/Quark-Bold/Quark-Bold.ttf") format("ttf"),
+  url("../font/Quark-Bold/Quark-Bold.svg#filename") format("svg");
+}
+@font-face {
+  font-family: "glyphicons";
+  src: url("../font/glyphicons/glyphicons-halflings-regular.eot");
+  src:
+  url("../font/glyphicons/GLYPHICONSHalflings-Regular.woff") format("woff"),
+  url("../font/glyphicons/glyphicons-halflings-regular.woff2") format("woff2"),
+  url("../font/glyphicons/GLYPHICONSHalflings-Regular.ttf") format("ttf"),
+  url("../font/glyphicons/GLYPHICONSHalflings-Regular.svg#filename") format("svg");
+}
+@font-face {
+  font-family: "DBadminX";
+  src: url("../font/DBadminX/DB-Adman-X.eot");
+  src:
+  url("../font/DBadminX/DBAdmanXRegular.woff") format("woff"),
+  url("../font/DBadminX/DB-Adman-X.woff2") format("woff2"),
+  url("../font/DBadminX/DBAdmanXRegular.ttf") format("ttf"),
+  url("../font/DBadminX/DBAdmanXRegular.svg#filename") format("svg");
+}
+
+*{
+  /* font-family: 'Mitr', sans-serif; */
+  /* font-family: 'Kanit', sans-serif; */
+  /* font-family: 'Quark-Light', sans-serif; */
+  /* font-family: 'Quark-Bold', sans-serif; */
+  /* font-family: 'ThaiSansLite', Arial, sans-serif; */
+  font-family: 'DBadminX', Arial, sans-serif;
+  /* font-weight:normal;
+  font-style:normal; */
+}
+
+html, body {
+  /* height: 100vh; */
+  max-width: 100%;
+  /* overflow-x: hidden; */
+}
+
+
+.navbar-default .navbar-nav li a:hover{
+  color: #d5d5d5;
+}
+
+.navbar-default .navbar-nav li a:hover, .navbar-default .navbar-nav li a:active {
+  color: #fff;
+}
+
+.main{
+  float: left;
+  /* width: 60%; */
+  /* padding: 0 20px; */
+  overflow: hidden;
+}
+
+/*@media only screen and (max-width:1920px) {
+  .main {
+    width: 100%;
+  }
+  .jumsize {
+    margin-left: 25%;
+    margin-right: 25%;
+  }
+  .jumsize2 {
+    margin-left: 15%;
+    margin-right: 15%;
+  }
+}*/
+/*@media only screen and (max-width:900px) {
+  .main {
+    width: 100%;
+  }
+  .jumdash{
+    margin-left: 20%;
+    margin-right: 20%;
+  }
+  .jumsize {
+    padding: 0;
+    margin: 0;
+  }
+  .fontsize{
+    font-size: 0.8rem;
+  }
+}*/
+/* @media only screen and (max-width:500px) {
+
+  .menu, .main, .right {
+    width: 100%;
+    height: 100%;
+
+  }
+} */
+
+body { margin: 0; font-family: 'Roboto', sans-serif; }

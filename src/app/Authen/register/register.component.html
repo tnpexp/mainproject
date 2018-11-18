@@ -1,0 +1,168 @@
+<body>
+  <div class="backpage">
+    <!-- <div class="register text-center">
+      <p><a><i class="material-icons" style="margin-right: 5px">group_add</i><b>สมัครสมาชิก</b></a></p>
+    </div> -->
+    <div class="container-fluid font" style="padding-top:5%">
+      <div class="card jumsize2 shadow p">
+        <div class="card-head register text-center" style="height:60px; padding-top: 5px; background-color: #28a745;color: #ffffff">
+          <i class="material-icons" style="margin-right: 5px">group_add</i><b>สมัครสมาชิก</b>
+        </div>
+        <div class="card-body">
+          <form class="mt-2" (ngSubmit)="addUsers(dataForm)" #dataForm="ngForm">
+
+
+            <div class="row">
+              <div class="col">
+                <div class="form-group row">
+                  <label class="mx-sm-3">ชื่อผู้ใช้งาน (Username)<font>*</font></label>
+                  <div class="col-7 ml-auto">
+                    <input type="text" class="form-control" placeholder="ควรประกอบด้วยตัวอักษร/ตัวเลขไม่เกิน 8 ตัวอักษร"
+                      maxlength="8" name="users" ngModel>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="mx-sm-3">รหัสผ่าน (Password)<font>*</font></label>
+                  <div class="col-7 ml-auto">
+                    <input type="password" class="form-control" placeholder="ควรมีความยาวอย่างน้อย 8-12 ตัวอักษร"
+                      maxlength="12" name="pass" ngModel>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="mx-sm-3">ยืนยันรหัสผ่าน (Confirm password)<font>*</font></label>
+                  <div class="col-7 ml-auto">
+                    <input type="password" class="form-control" placeholder="ยืนยันรหัสผ่านอีกครั้งเพื่อยืนยัน"
+                      maxlength="12">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="mx-sm-3">คำถามกรณีเมื่อลืมรหัส<font>*</font></label>
+                  <div class="col-7 ml-auto">
+                    <input type="text" class="form-control" placeholder="กรอกคำถามกรณีเมื่อลืมรหัส" name="question"
+                      ngModel>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="mx-sm-3">คำตอบกรณีเมื่อลืมรหัส<font>*</font></label>
+                  <div class="col-7 ml-auto">
+                    <input type="text" class="form-control" placeholder="กรอกคำตอบกรณีเมื่อลืมรหัส" name="answer"
+                      ngModel>
+                  </div>
+                </div>
+
+                <div class="form-group row" hidden>
+                  <!-- ตัวกำหนดสิทธิ์ผู้ใช้งาน -->
+                  <label class="mx-sm-3">ตัวกำหนดสิทธิ์ผู้ใช้งาน</label>
+                  <div class="col-8 ml-auto">
+                    <select class="form-control" ngModel="2" name="privilege_id">
+                      <option selected value="1">admin</option>
+                      <option value="2">ผู้ใช้ทั่วไป</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group col">
+                    <label>ที่อยู่<font>*</font></label>
+                    <textarea type="text" class="form-control" placeholder="กรอกที่อยู่ปัจจุบันที่สามารถติดต่อได้" name="address"
+                      ngModel></textarea>
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group col-md-6">
+                    <label for="inputCity">อำเภอ<font>*</font></label>
+                    <input type="text" class="form-control" id="inputCity" name="city" required ngModel>
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="inputState">จังหวัด<font>*</font></label>
+                    <input type="text" class="form-control" id="inputState" name="State" required ngModel>
+                  </div>
+                  <div class="form-group col-md-2">
+                    <label for="zip">รหัสไปรษณี<font>*</font></label>
+                    <input type="text" class="form-control" id="zip" name="zip" required ngModel>
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="col">
+                <div class="form-row">
+                  <div class="form-group col">
+                    <label>ชื่อจริง (ภาษาไทย)<font>*</font></label>
+                    <input type="text" class="form-control" placeholder="กรอกชื่อจริงตามบัตรประชาชน" name="fname"
+                      ngModel>
+                  </div>
+                  <div class="form-group col">
+                    <label>นามสกุล (ภาษาไทย)<font>*</font></label>
+                    <input type="text" class="form-control" placeholder="กรอกนามสกุลตามบัตรประชาชน" name="lname"
+                      ngModel>
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group col">
+                    <label>ชื่อจริง (ภาษาอังกฤษ)<font>*</font></label>
+                    <input type="text" class="form-control" placeholder="กรอกชื่อจริงตามบัตรประชาชน" name="efname"
+                      ngModel>
+                  </div>
+                  <div class="form-group col">
+                    <label>นามสกุล (ภาษาอังกฤษ)<font>*</font></label>
+                    <input type="text" class="form-control" placeholder="กรอกนามสกุลตามบัตรประชาชน" name="elname"
+                      ngModel>
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group col">
+                    <label>เพศ<font>*</font></label>
+                    <select class="form-control" name="gender" ngModel="ชาย">
+                      <option selected value="ชาย">ชาย</option>
+                      <option value="หญิง">หญิง</option>
+                    </select>
+                  </div>
+                  <div class="form-group col">
+                    <label>วัน/เดือน/ปีเกิด<font>*</font></label>
+                    <input type="date" class="form-control" name="day_of_birth" ngModel>
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group col">
+                    <label>เลขบัตรประจำตัวประชาชน<font>*</font></label>
+                    <input type="text" class="form-control" placeholder="เลขบัตรประจำตัวประชาชน 13 หลัก" maxlength="13"
+                      name="id_code" ngModel>
+                  </div>
+                  <div class="form_group col">
+                    <label>อีเมล<font>*</font></label>
+                    <input type="email" class="form-control" placeholder="เช่น example@hotmail.com" name="email"
+                      ngModel>
+                  </div>
+                </div>
+
+
+                <div class="form-row">
+                  <div class="form_group col">
+                    <label>เบอร์โทรศัพท์<font>*</font></label>
+                    <input type="text" class="form-control mb-2" placeholder="กรอกเบอร์โทรศัพท์ที่สามารถติดต่อได้"
+                      maxlength="10" name="phone_num" ngModel>
+                  </div>
+                  <div class="form_group col">
+                    <label>แฟ็ก (Fax)</label>
+                    <input type="text" class="form-control" placeholder="กรอกแฟ็กที่สามารถติดต่อได้" maxlength="9" name="fax"
+                      ngModel>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="row">
+              <button type="submit" class="btn btn-success mt-4" style="margin-left: 35% ;width: 30%;margin-right: 35%">
+                สมัครสมาชิก
+              </button>
+            </div>
+          </form>
+          <div class="text-center mt-3" style="width:100% ; font-size: 1.35rem">
+            หากยังมีบัญชีผู้ใช้<a routerLink="/login" style="margin-left:6px"><b>ลงชื่อผู้ใช้</b></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>

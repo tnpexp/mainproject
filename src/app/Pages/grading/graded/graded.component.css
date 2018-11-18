@@ -1,0 +1,89 @@
+.Graded{
+  font-size: 2rem;
+  color: #003171;
+}
+
+/* .fa{
+  font-size: 1.5rem;
+} */
+
+/* .cardsize{
+  padding: 0%;
+  background-image: url('../../../../../photo/photo02.jpg');
+  background-size: cover;
+  background-position: center;
+} */
+
+.jumbotron{
+  background: rgb(255, 255, 255);
+  border: 1px solid rgb(211, 211, 211);
+}
+
+.jumgrade{
+  height: 10%;
+  width: 5%;
+}
+/* .jumimg{
+  background-image: url('../../../../../photo/photo02.jpg');
+  background-size: cover;
+  background-position: center;
+  height: 85%;
+} */
+
+.gradetext{
+  font-family: 'Quark-Light', sans-serif;
+  font-size: 12rem;
+  /* height: 100px; */
+  /* width: 8rem; */
+}
+
+.btn{
+  font-size: 1.4em;
+  width: 150px;
+  height: 100%;
+  padding-top: 15px;
+}
+
+.font{
+  font-size: 1.3rem;
+}
+
+.btn span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.btn span:after {
+  content: '\00bb';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+.btn:hover span {
+  padding-right: 25px;
+}
+
+.btn:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+
+.material-icons{
+  vertical-align: -6px;
+  font-size: 1.8rem;
+}
+
+input {
+  font-size: 1.2rem;
+  color: rgb(30, 30, 30);
+  /* font-weight: bold; */
+}
+label{
+  font-size: 1.4rem;
+  /* font-weight: bold; */
+}
