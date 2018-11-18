@@ -13,11 +13,10 @@
   height: 10%;
   width: 5%;
 }
-.jumimg{
-  background-image: url('../../../../../photo/photo02.jpg');
+
+.cardsize{
+  padding: 0%;
   background-size: cover;
-  background-position: center;
-  height: 450px;
 }
 
 .gradetext{
@@ -36,7 +35,7 @@
 
 .btn{
   font-size: 1.4em;
-  width: 150px;
+  /* width: 150px; */
   height: 100%;
   padding-top: 15px;
 }
@@ -82,7 +81,7 @@
   height: 1rem;
 }
 .chbox1{
-  margin-left: 40%;
+  margin-left: 20%;
 }
 
 input {

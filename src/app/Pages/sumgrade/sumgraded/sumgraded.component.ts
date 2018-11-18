@@ -9,6 +9,7 @@ import { UploadService } from 'src/app/uploads/shared/upload.service';
 import swal from 'sweetalert2';
 import { database } from 'firebase';
 import { NgForm } from '@angular/forms';
+import { GradedService } from 'src/app/services/API-graded/graded.service';
 
 @Component({
   selector: 'app-sumgraded',
@@ -16,10 +17,10 @@ import { NgForm } from '@angular/forms';
   styleUrls: ['./sumgraded.component.css']
 })
 export class SumgradedComponent implements OnInit {
-  picName = 'file';
+
   file;
   key;
-  data_name_ex = {
+  name_ex = {
     fn_ex1: '',
     ln_ex1: '',
     fn_ex2: '',
@@ -31,6 +32,11 @@ export class SumgradedComponent implements OnInit {
     fn_ex5: '',
     ln_ex5: ''
   };
+  items = {
+    $key: '',
+    picture: '',
+    grade_sys: ''
+  };
 
   public isLogin;
   public userfirst;
@@ -38,16 +44,15 @@ export class SumgradedComponent implements OnInit {
   public grade_ex;
   public grade_selected;
   public grade_sys;
+  public grade_opt;
 
-  datalist: AngularFireList<any>;
-  datauser: any[];
   detail;
-  datagradelist: AngularFireList<any>;
-  datagrade: any[];
-  data: Observable<any[]>;
+  detail_grade_sys;
   datas = [];
+  datagrade: any[];
   datesumed = new Date();
   choice;
+  Pic;
 
   constructor(
     private auth: AuthService,
@@ -56,8 +61,38 @@ export class SumgradedComponent implements OnInit {
     private global: GlobalService,
     private upload: UploadService,
     private _route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private api: GradedService
   ) {
+    this._route.params.subscribe(params => {
+      this.key = params['key'];
+    });
+    console.log(this.key);
+  }
+
+  select_grade(grade_ex) {
+    this.grade_ex = grade_ex;
+    console.log(this.grade_ex);
+  }
+  grade_choice(test) {
+    console.log('asas: ' + this.grade_sys);
+    console.log(test);
+    this.choice = test;
+    console.log(this.choice);
+
+  }
+
+  ngOnInit() {
+    this.api.getDataByKey(this.key).subscribe(data => {
+      console.log(data);
+    this.grade_sys = Object.keys(data).map(key => data[key])[0].grade_sys;
+    this.Pic = Object.keys(data).map(key => data[key])[0].picture;
+      //  this.datagrade = Object.values(data);
+      // for (let i = 0; i < Object.values(data).length; i++) {
+      //   this.datagrade[i].key = Object.keys(data)[i];
+      // }
+    });
+
     this.afAuth.authState.subscribe(data => {
       this.detail = this.db
         .list('/user', ref => ref.orderByChild('email').equalTo(data.email))
@@ -71,48 +106,7 @@ export class SumgradedComponent implements OnInit {
         });
       });
     });
-
-    this.datagrade = [];
-    this.datagradelist = db.list('/graded');
-    this.datagradelist.snapshotChanges().subscribe(actions => {
-      actions.forEach(action => {
-        const y  = action.payload.toJSON();
-        y['key'] = action.key;
-        this.datagrade.push(y as Listitemgraded);
-      });
-    });
-
-    this._route.params.subscribe(params => {
-      this.key = params['key'];
-      this.picName = params['file'];
-    });
-    console.log(this.key);
-    this.data = this.db
-      .list('/graded', ref => ref.orderByKey().equalTo(this.key ))
-      .valueChanges();
-    this.data.subscribe(data => {
-      data.forEach(snap => {
-        this.datas.push(snap);
-        this.grade_sys = snap.grade_sys;
-      });
-    });
-
     this.datesumed = new Date();
-  }
-
-  select_grade(grade_ex) {
-    this.grade_ex = grade_ex;
-    console.log(this.grade_ex);
- }
-  grade_choice(test) {
-    console.log('asas: ' + this.grade_sys);
-    console.log(test);
-    this.choice = test;
-    console.log(this.choice);
-
-  }
-
-  ngOnInit() {
   }
 
   addUsers(data: NgForm) {
@@ -138,10 +132,14 @@ export class SumgradedComponent implements OnInit {
       this.datas[0].grade_con = this.grade_sys;
       console.log(this.datas[0].grade_con);
       this.db.list('/graded').update(this.key, {grade_ex: this.grade_sys});
-    } else {
+    } else if (this.choice === 2) {
       this.datas[0].grade_con = this.grade_ex;
       console.log(this.datas[0].grade_con);
       this.db.list('/graded').update(this.key, {grade_ex: this.grade_ex});
+    } else {
+      this.datas[0].grade_con = this.grade_opt;
+      console.log(this.datas[0].grade_con);
+      this.db.list('/graded').update(this.key, {grade_ex: this.grade_opt});
     }
     console.log(this.datas[0]);
     this.db.list('/summed').push(this.datas[0]);
@@ -155,6 +153,3 @@ export class SumgradedComponent implements OnInit {
   }
 }
 
-export class Listitemgraded {
-  grade_sys: string;
-}

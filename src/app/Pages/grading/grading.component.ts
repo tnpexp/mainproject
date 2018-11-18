@@ -105,10 +105,9 @@ export class GradingComponent implements OnInit {
     this.currentUpload = new Upload(this.file);
     const storageRef = firebase.storage().ref();
     this.upload.pushUpload(this.currentUpload);
-
     swal({
       title: 'กำลังบันทึกผลเกรด!',
-      html: 'จะปิดเมื่อบันทึกเสร็จใน <strong></strong> วินาที.',
+      // html: 'จะปิดเมื่อบันทึกเสร็จใน <strong></strong> วินาที.',
       timer: 5000,
       onOpen: () => {
         swal.showLoading();
@@ -146,6 +145,7 @@ export class GradingComponent implements OnInit {
           const value = Object.keys(data1).map(key => data1[key]);
           value[0].picture = datas;
           value[0].status = 'ไม่ได้สรุปเกรด';
+          value[0].date_sum = '';
           value[0].grade_sys = this.grade;
           value[0].datecuted = String(this.datecuted);
           console.log(value[0]);
