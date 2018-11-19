@@ -44,6 +44,20 @@ import { RouterModule } from '@angular/router';
 import { ApiService } from './services/api.service';
 import { SetSumgradeComponent } from './Pages/setting/set-sumgrade/set-sumgrade.component';
 
+/** Import animations */
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+/** Import Alyle UI */
+import {
+  LyThemeModule,
+  LY_THEME
+} from '@alyle/ui';
+/** Import components */
+import { LyButtonModule } from '@alyle/ui/button';
+import { LyToolbarModule } from '@alyle/ui/toolbar';
+import { LyResizingCroppingImageModule } from '@alyle/ui/resizing-cropping-images';
+/** Import themes */
+import { MinimaLight, MinimaDark } from '@alyle/ui/themes/minima';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -79,14 +93,25 @@ import { SetSumgradeComponent } from './Pages/setting/set-sumgrade/set-sumgrade.
     SweetAlert2Module.forRoot(),
     AngularFireAuthModule,
     HttpModule,
+    BrowserAnimationsModule,
+    // Set theme
+    LyThemeModule.setTheme('minima-light'),
+    // Add components
+    LyButtonModule,
+    LyToolbarModule,
+    LyResizingCroppingImageModule
   ],
-  providers: [UploadService,
-   GlobalService,
+  providers: [
+    UploadService,
+    GlobalService,
     AuthService,
     FireauthService,
     FirestoreService,
     FirestorageService,
-    ApiService
+    ApiService,
+    { provide: LY_THEME, useClass: MinimaLight, multi: true }, // name: `minima-light`
+    { provide: LY_THEME, useClass: MinimaDark, multi: true } // name: `minima-dark`
+
   ],
   bootstrap: [AppComponent]
 })
