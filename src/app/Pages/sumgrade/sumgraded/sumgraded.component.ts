@@ -10,6 +10,7 @@ import swal from 'sweetalert2';
 import { database } from 'firebase';
 import { NgForm } from '@angular/forms';
 import { GradedService } from 'src/app/services/API-graded/graded.service';
+import { SumgradeService } from 'src/app/services/API-sumgrade/sumgrade.service';
 
 @Component({
   selector: 'app-sumgraded',
@@ -62,7 +63,8 @@ export class SumgradedComponent implements OnInit {
     private upload: UploadService,
     private _route: ActivatedRoute,
     private router: Router,
-    private api: GradedService
+    private api: GradedService,
+    private apisumgrade: SumgradeService
   ) {
     this._route.params.subscribe(params => {
       this.key = params['key'];
@@ -70,9 +72,11 @@ export class SumgradedComponent implements OnInit {
     console.log(this.key);
   }
 
-  select_grade(grade_ex) {
+  select_grade(grade_ex, grade_opt) {
     this.grade_ex = grade_ex;
     console.log(this.grade_ex);
+    this.grade_opt = grade_opt;
+    console.log(this.grade_opt);
   }
   grade_choice(test) {
     console.log('asas: ' + this.grade_sys);
@@ -85,8 +89,8 @@ export class SumgradedComponent implements OnInit {
   ngOnInit() {
     this.api.getDataByKey(this.key).subscribe(data => {
       console.log(data);
-    this.grade_sys = Object.keys(data).map(key => data[key])[0].grade_sys;
-    this.Pic = Object.keys(data).map(key => data[key])[0].picture;
+      this.grade_sys = Object.keys(data).map(key => data[key])[0].grade_sys;
+      this.Pic = Object.keys(data).map(key => data[key])[0].picture;
       //  this.datagrade = Object.values(data);
       // for (let i = 0; i < Object.values(data).length; i++) {
       //   this.datagrade[i].key = Object.keys(data)[i];
@@ -110,46 +114,76 @@ export class SumgradedComponent implements OnInit {
   }
 
   addUsers(data: NgForm) {
-    this.db.list('/graded').update(this.key, {status: 'สรุปเกรดแล้ว'});
-    this.db.list('/graded').update(this.key, {date_sum: String(this.datesumed)});
-    this.datas[0].fn_ex1 = data.value.fn_ex1;
-    this.datas[0].ln_ex1 = data.value.ln_ex1;
-    this.datas[0].fn_ex2 = data.value.fn_ex2;
-    this.datas[0].ln_ex2 = data.value.ln_ex2;
-    this.datas[0].fn_ex3 = data.value.fn_ex3;
-    this.datas[0].ln_ex3 = data.value.ln_ex3;
-    this.datas[0].fn_ex4 = data.value.fn_ex4;
-    this.datas[0].ln_ex4 = data.value.ln_ex4;
-    this.datas[0].fn_ex5 = data.value.fn_ex5;
-    this.datas[0].ln_ex5 = data.value.ln_ex5;
-    this.datas[0].date_sum = String(this.datesumed);
-    this.datas[0].grade_selected = this.grade_selected;
-    this.datas[0].grade_ex = this.grade_ex;
-    this.datas[0].status = '';
-    this.datas[0].sys_grage_sum_fn = this.userfirst;
-    this.datas[0].sys_grage_sum_ln = this.userlast;
-    if (this.choice === 1) {
-      this.datas[0].grade_con = this.grade_sys;
-      console.log(this.datas[0].grade_con);
-      this.db.list('/graded').update(this.key, {grade_ex: this.grade_sys});
-    } else if (this.choice === 2) {
-      this.datas[0].grade_con = this.grade_ex;
-      console.log(this.datas[0].grade_con);
-      this.db.list('/graded').update(this.key, {grade_ex: this.grade_ex});
-    } else {
-      this.datas[0].grade_con = this.grade_opt;
-      console.log(this.datas[0].grade_con);
-      this.db.list('/graded').update(this.key, {grade_ex: this.grade_opt});
-    }
-    console.log(this.datas[0]);
-    this.db.list('/summed').push(this.datas[0]);
     swal({
-      title: 'บันทึกสรุปเกรดสำเร็จ!',
-      text: '',
-      type: 'success'
+      title: 'กำลังบันทึกผลเกรด!',
+      timer: 2000,
+      onOpen: () => {
+        swal.showLoading();
+
+      },
+      onClose: () => {
+        this.router.navigate(['/sumgrade']);
+      }
+    }).then(result => {
+      if (
+        // Read more about handling dismissals
+        result.dismiss === swal.DismissReason.timer
+      ) {
+        console.log('I was closed by the timer');
+      }
     });
-    this.router.navigate(['/sumgrade']);
-    setTimeout(() => location.reload(), 700);
+
+    // this.apisumgrade.getDataByKey(this.key).subscribe(data1 => {
+    //   const value = Object.keys(data1).map(key => data1[key]);
+    //   value[0].picture = datas;
+    //   value[0].status = 'ไม่ได้สรุปเกรด';
+    //   value[0].date_sum = '';
+    //   value[0].grade_sys = this.grade;
+    //   value[0].datecuted = String(this.datesumed);
+    //   console.log(value[0]);
+    //   this.apigrade.addData(value[0]).subscribe();
+    // });
+
+    // this.db.list('/graded').update(this.key, {status: 'สรุปเกรดแล้ว'});
+    // this.db.list('/graded').update(this.key, {date_sum: String(this.datesumed)});
+    // this.datas[0].fn_ex1 = data.value.fn_ex1;
+    // this.datas[0].ln_ex1 = data.value.ln_ex1;
+    // this.datas[0].fn_ex2 = data.value.fn_ex2;
+    // this.datas[0].ln_ex2 = data.value.ln_ex2;
+    // this.datas[0].fn_ex3 = data.value.fn_ex3;
+    // this.datas[0].ln_ex3 = data.value.ln_ex3;
+    // this.datas[0].fn_ex4 = data.value.fn_ex4;
+    // this.datas[0].ln_ex4 = data.value.ln_ex4;
+    // this.datas[0].fn_ex5 = data.value.fn_ex5;
+    // this.datas[0].ln_ex5 = data.value.ln_ex5;
+    // this.datas[0].date_sum = String(this.datesumed);
+    // this.datas[0].grade_selected = this.grade_selected;
+    // this.datas[0].grade_ex = this.grade_ex;
+    // this.datas[0].status = '';
+    // this.datas[0].sys_grage_sum_fn = this.userfirst;
+    // this.datas[0].sys_grage_sum_ln = this.userlast;
+    // if (this.choice === 1) {
+    //   this.datas[0].grade_con = this.grade_sys;
+    //   console.log(this.datas[0].grade_con);
+    //   this.db.list('/graded').update(this.key, {grade_ex: this.grade_sys});
+    // } else if (this.choice === 2) {
+    //   this.datas[0].grade_con = this.grade_ex;
+    //   console.log(this.datas[0].grade_con);
+    //   this.db.list('/graded').update(this.key, {grade_ex: this.grade_ex});
+    // } else {
+    //   this.datas[0].grade_con = this.grade_opt;
+    //   console.log(this.datas[0].grade_con);
+    //   this.db.list('/graded').update(this.key, {grade_ex: this.grade_opt});
+    // }
+    // console.log(this.datas[0]);
+    // this.db.list('/summed').push(this.datas[0]);
+    // swal({
+    //   title: 'บันทึกสรุปเกรดสำเร็จ!',
+    //   text: '',
+    //   type: 'success'
+    // });
+    // this.router.navigate(['/sumgrade']);
+    // setTimeout(() => location.reload(), 700);
   }
 }
 

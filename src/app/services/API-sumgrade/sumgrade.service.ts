@@ -11,22 +11,25 @@ export class SumgradeService {
   constructor(private http: Http) { }
 
   addData(data) {
-    return this.http.post(api.url + '/api/add', data).pipe(map(res => res.json()));
+    return this.http.post(api.url + '/api/summed/add', data).pipe(map(res => res.json()));
   }
 
   removeData(key) {
-    return this.http.delete(api.url + '/api/remove/' + key).pipe(map(res => res.json()));
+    return this.http.delete(api.url + '/api/summed/remove/' + key).pipe(map(res => res.json()));
   }
 
   addDataform(data) {
-    return this.http.post(api.url + '/api/addform', data).pipe(map(res => res.json()));
+    return this.http.post(api.url + '/api/summed/addform', data).pipe(map(res => res.json()));
   }
 
   showData() {
-    return this.http.get(api.url + '/api/show').pipe(map(res => res.json()));
+    return this.http.get(api.url + '/api/summed/show').pipe(map(res => res.json()));
   }
 
   editData(key, data) {
-    return this.http.post(api.url + '/api/edit/' + key, data).pipe(map(res => res.json()));
+    return this.http.post(api.url + '/api/summed/edit/' + key, data).pipe(map(res => res.json()));
+  }
+  getDataByKey(key) {
+    return this.http.get(api.url + '/api/summed/show/' + key).pipe(map(res => res.json()));
   }
 }
