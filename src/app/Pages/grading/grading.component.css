@@ -20,7 +20,8 @@
 
 .cardsize{
   padding: 0%;
-  background-size: cover;
+  width: 400px;
+  height:400px;
 }
 
 .Grading{

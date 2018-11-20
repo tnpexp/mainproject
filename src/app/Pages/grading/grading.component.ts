@@ -130,19 +130,20 @@ const styles = (theme: ThemeVariables) => ({
   selector: 'app-grading',
   templateUrl: './grading.component.html',
   styleUrls: ['./grading.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  // changeDetection: ChangeDetectionStrategy.OnPush,
   preserveWhitespaces: false
 })
 export class GradingComponent implements OnInit {
   checkProcess = true;
   picName = 'เลือกไฟล์รูปภาพ';
   file;
-  grade = 5;
+  grade = '';
   key;
   datecuted;
   selectedFiles: FileList;
   currentUpload: Upload;
   data: any;
+  datas: any;
   public userfirst;
   public userlast;
   detail;
@@ -179,7 +180,7 @@ export class GradingComponent implements OnInit {
       height: 300
     }
   };
-
+  name_pic;
   constructor(
     private db: AngularFireDatabase,
     private upload: UploadService,
@@ -195,6 +196,20 @@ export class GradingComponent implements OnInit {
       this.key = params['key'];
     });
     console.log(this.key);
+  }
+
+  onCropped(e: ImgCropperEvent) {
+    this.croppedImage = e.dataURL;
+    this.picName = e.dataURL;
+    console.log('cropped img: ', e);
+    console.log('picName: ', this.picName);
+  }
+  onloaded(e: ImgCropperEvent) {
+    console.log('img loaded', e);
+    this.name_pic = e.name;
+  }
+  onerror(e: ImgCropperEvent) {
+    console.warn(`'${e.name}' is not a valid image`, e);
   }
 
   ngOnInit() {
@@ -221,17 +236,6 @@ export class GradingComponent implements OnInit {
     this.datecuted = new Date();
   }
 
-  onCropped(e: ImgCropperEvent) {
-    this.croppedImage = e.dataURL;
-    console.log('cropped img: ', e);
-  }
-  onloaded(e: ImgCropperEvent) {
-    console.log('img loaded', e);
-  }
-  onerror(e: ImgCropperEvent) {
-    console.warn(`'${e.name}' is not a valid image`, e);
-  }
-
   onFileChanged(event) {
     this.event = event;
     this.file = event.target.files[0];
@@ -242,28 +246,47 @@ export class GradingComponent implements OnInit {
   }
 
   greaded(data: NgForm) {
-    this.currentUpload = new Upload(this.file);
-    const storageRef = firebase.storage().ref();
-    this.upload.pushUpload(this.currentUpload);
+    this.upload.pushImageByBase64(this.name_pic, this.picName);
+    console.log(this.name_pic, this.picName);
+  // this.currentUpload = new Upload(this.file);
+  const storageRef = firebase.storage().ref();
+    // this.upload.pushUpload(this.currentUpload);
     swal({
       title: 'กำลังบันทึกผลเกรด!',
       // html: 'จะปิดเมื่อบันทึกเสร็จใน <strong></strong> วินาที.',
       timer: 5000,
       onOpen: () => {
         swal.showLoading();
-        storageRef
-        .child('uploads/' + this.picName)
-        .getDownloadURL()
-        .then(datas => {
-          this.api
-            .editData(this.key, {
-              status: this.grade,
-              grade_sys: this.grade,
-              datecuted: String(this.datecuted),
-              picture: datas
-            })
-            .subscribe();
-        });
+        setTimeout(() => {
+          storageRef
+            .child('uploads/' + this.name_pic)
+            .getDownloadURL()
+            .then(datas => {
+              this.api
+                .editData(this.key, {
+                  status: this.grade,
+                  grade_sys: this.grade,
+                  datecuted: String(this.datecuted),
+                  picture: datas
+                })
+                .subscribe();
+            });
+            storageRef
+            .child('uploads/' + this.name_pic)
+            .getDownloadURL()
+            .then(datas => {
+              this.api.getDataByKey(this.key).subscribe(data1 => {
+                const value = Object.keys(data1).map(key => data1[key]);
+                value[0].picture = datas;
+                value[0].status = 'ไม่ได้สรุปเกรด';
+                value[0].date_sum = '';
+                value[0].grade_sys = this.grade;
+                value[0].datecuted = String(this.datecuted);
+                console.log(value[0]);
+                this.apigrade.addData(value[0]).subscribe();
+              });
+            });
+        }, 5000);
       },
       onClose: () => {
         this.router.navigate(['/aboutcattle']);
@@ -276,22 +299,6 @@ export class GradingComponent implements OnInit {
         console.log('I was closed by the timer');
       }
     });
-
-    storageRef
-      .child('uploads/' + this.picName)
-      .getDownloadURL()
-      .then(datas => {
-        this.api.getDataByKey(this.key).subscribe(data1 => {
-          const value = Object.keys(data1).map(key => data1[key]);
-          value[0].picture = datas;
-          value[0].status = 'ไม่ได้สรุปเกรด';
-          value[0].date_sum = '';
-          value[0].grade_sys = this.grade;
-          value[0].datecuted = String(this.datecuted);
-          console.log(value[0]);
-          this.apigrade.addData(value[0]).subscribe();
-        });
-      });
     // this.datas[0].datecuted = String(this.datecuted);
     // this.datas[0].grade_sys = this.grade;
     // this.datas[0].sys_grage_cut_fn = this.userfirst;

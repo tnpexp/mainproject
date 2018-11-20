@@ -26,10 +26,10 @@
                         <button (click)="cropping.zoomOut()" ly-button><i class="material-icons" style="margin-right: 5px">zoom_out</i></button>
                         <button (click)="cropping.center()" ly-button><i class="material-icons" style="margin-right: 5px">filter_center_focus</i></button>
                         <button (click)="cropping.rotate(-90)" ly-button><i class="material-icons" style="margin-right: 5px">rotate_90_degrees_ccw</i></button>
-                        <button (click)="cropping.fit()" ly-button><h4>fit</h4></button>
-                        <button (click)="cropping.fitToScreen()" ly-button><h4>Fit to screen</h4></button>
-                        <button (click)="cropping.setScale(1)" ly-button><h4>1:1</h4></button>
-                        <button (click)="cropping.clean()" ly-button><h4>Clean</h4></button>
+                        <!-- <button (click)="cropping.fit()" ly-button><h4>fit</h4></button> -->
+                        <button (click)="cropping.fitToScreen()" ly-button><h4>เต็มหน้าจอ</h4></button>
+                      <!-- <button (click)="cropping.setScale(1)" ly-button><h4>1:1</h4></button> -->
+                        <button (click)="cropping.clean()" ly-button><h4>ลบภาพ</h4></button>
                       </div>
                     <div class="card">
                       <div class="card-body" style="padding:0%">
@@ -330,14 +330,19 @@
                   <div style="color: #1560BD; margin-bottom: 20px">
                     <h4><b>รูปตัวอย่างซากโค</b></h4>
                   </div>
-                  <div class="card text-center">
-                    <img
+                  <div class="text-center">
+                    <img *ngIf="cropping.isCropped"
+                      [src]="croppedImage"
+                      class="cardsize"
+                      style="border-radius: 5px"
+                      >
+                    <!-- <img
                       class="card-body cardsize"
                       style="border-radius: 5px"
                       src="{{picName}}"
                       width="cover"
                       height="500"
-                    />
+                    /> -->
                   </div>
                 </div>
 
