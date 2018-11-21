@@ -151,10 +151,10 @@ export class SumgradedComponent implements OnInit {
       timer: 2000,
       onOpen: () => {
         swal.showLoading();
-          // this.apigrade.editData(this.key, {
-          //   status: 'สรุปเกรดแล้ว',
-          //   date_sum: String(this.datesumed)
-          // }).subscribe();
+          this.apigrade.editData(this.key, {
+            status: 'สรุปเกรดแล้ว',
+            date_sum: String(this.datesumed)
+          }).subscribe();
 
           this.apigrade.getDataByKey(this.key).subscribe(data1 => {
             const value = Object.keys(data1).map(key => data1[key]);

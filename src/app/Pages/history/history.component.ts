@@ -39,6 +39,7 @@ export class Listitemcattle {
   roomdry: string;
   owncattle: string;
   status: string;
+  picture: string;
 
   date_sum: string;
   datecuted: string;

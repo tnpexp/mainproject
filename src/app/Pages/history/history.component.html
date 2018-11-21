@@ -67,7 +67,40 @@
                 {{data.fn_ex5}}&nbsp;&nbsp;{{data.ln_ex5}}
               </td>
               <td>{{data.firstown}}&nbsp;&nbsp;{{data.lastown}}</td>
-              <td></td>
+              <td>
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#exampleModalCenter">
+                  <h5><b>รูปภาพ</b></h5>
+                </button>
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalCenterTitle">Modal title</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body">
+                        <div class=" text-center">
+                          <img
+                            class=" cardsize"
+                            style="border-radius: 5px"
+                            src="{{data.picture}}"
+                            width="cover"
+                            height="cover"
+                          />
+                        </div>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </td>
               <td>{{data.grade_con}}</td>
               <td>
                 <button routerLink="/report" type="button" class="btn button btn-success" style="background-color: limegreen"><b>ออกรายงาน</b></button>
@@ -79,55 +112,5 @@
     </div>
   </div>
 </div>
-<!-- <tr>
-              <th scope="row">1</th>
-              <td>000001</td>
-              <td>000001-01</td>
-              <td>000001-01</td>
-              <td>08-01-2018</td>
-              <td>09-01-2018</td>
-              <td>225</td>
-              <td>225</td>
-              <td>ธนภัทร กาจีนะ</td>
-              <td>
-                ธนภัทร กาจีนะ<br>
-                อรัญญา เกษมสุข<br>
-                ทศวรรษ อาวาส<br>
-                จิตภาณุ จิตรยศักดิ์
-              </td>
-              <td>นายสดชื่น อุ่นใจ</td>
-              <td class="btn-link">img001.jpg</td>
-              <td style="color: #00cc00"><b>4.5</b></td>
-              <td>
-                <button routerLink="/report" type="button" class="btn button btn-success" style="background-color: limegreen"><b>ออกรายงาน</b></button>
-              </td>
-              <td>
-                <button type="button" class="btn btn-danger"><i class="fa fa-close"></i></button>
-              </td>
-            </tr> -->
-            <!-- <tr>
-              <th scope="row">2</th>
-              <td>000002</td>
-              <td>000002-01</td>
-              <td>000002-01</td>
-              <td>10-01-2018</td>
-              <td>10-01-2018</td>
-              <td>230</td>
-              <td>235</td>
-              <td>อรัญญา เกษมสุข</td>
-              <td>
-                ธนภัทร กาจีนะ<br>
-                อรัญญา เกษมสุข<br>
-                ทศวรรษ อาวาส<br>
-                จิตภาณุ จิตรยศักดิ์
-              </td>
-              <td>นางชื่น อุ่นติ้บ</td>
-              <td class="btn-link">img002.jpg</td>
-              <td style="color: #00cc00"><b>5</b></td>
-              <td>
-                <button routerLink="/report" type="button" class="btn button btn-success" style="background-color: limegreen"><b>ออกรายงาน</b></button>
-              </td>
-              <td>
-                <button type="button" class="btn btn-danger"><i class="fa fa-close"></i></button>
-              </td>
-            </tr> -->
+
+

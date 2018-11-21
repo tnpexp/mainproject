@@ -41,3 +41,9 @@ thead > tr > td{
 .search-input{
   height: 43px;
 }
+
+.cardsize{
+  padding: 0%;
+  width: 400px;
+  height:400px;
+}
