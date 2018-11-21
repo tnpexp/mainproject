@@ -217,7 +217,7 @@
                     <tbody>
                       <tr>
                         <td class="gradetext" style="color: rgb(72, 255, 0)">
-                          <b>{{ grade_ex }}{{ grade_opt }}</b>
+                          <b>{{ grade_ex }}</b>
                         </td>
                       </tr>
                     </tbody>
@@ -236,9 +236,9 @@
                         class="form-control col-8 form-group font"
                         id="exampleFormControlSelect1"
                         style="margin-left:18%"
-                        name="grade_ex"
-                        [(ngModel)]="grade_ex"
-                        (change)="select_grade(grade_ex)"
+                        name="grade_opt1"
+                        [(ngModel)]="grade_opt1"
+                        (change)="select_grade(grade_opt1)"
                       >
                         <option>1</option>
                         <option>2</option>
@@ -266,10 +266,12 @@
                     <input
                       class="form-control col-sm-8"
                       style="margin-left:18%; margin-top: 15px"
-                      type="text"
-                      name="grade_opt"
-                      [(ngModel)]="grade_opt"
-                      (change)="select_grade(grade_opt)"
+                      type="number"
+                      name="grade_opt2"
+                      [(ngModel)]="grade_opt2"
+                      (keyup)="select_grade_opt2($event)"
+                      max="5"
+                      min="1"
                     />
                   </div>
                 </div>

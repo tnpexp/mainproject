@@ -248,8 +248,8 @@ export class GradingComponent implements OnInit {
   greaded(data: NgForm) {
     this.upload.pushImageByBase64(this.name_pic, this.picName);
     console.log(this.name_pic, this.picName);
-  // this.currentUpload = new Upload(this.file);
-  const storageRef = firebase.storage().ref();
+    // this.currentUpload = new Upload(this.file);
+    const storageRef = firebase.storage().ref();
     // this.upload.pushUpload(this.currentUpload);
     swal({
       title: 'กำลังบันทึกผลเกรด!',
@@ -282,6 +282,8 @@ export class GradingComponent implements OnInit {
                 value[0].date_sum = '';
                 value[0].grade_sys = this.grade;
                 value[0].datecuted = String(this.datecuted);
+                value[0].sys_grage_cut_fn = this.userfirst;
+                value[0].sys_grage_cut_ln = this.userlast;
                 console.log(value[0]);
                 this.apigrade.addData(value[0]).subscribe();
               });

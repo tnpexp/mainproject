@@ -11,6 +11,7 @@ import { database } from 'firebase';
 import { NgForm } from '@angular/forms';
 import { GradedService } from 'src/app/services/API-graded/graded.service';
 import { SumgradeService } from 'src/app/services/API-sumgrade/sumgrade.service';
+import * as firebase from 'firebase';
 
 @Component({
   selector: 'app-sumgraded',
@@ -45,7 +46,8 @@ export class SumgradedComponent implements OnInit {
   public grade_ex;
   public grade_selected;
   public grade_sys;
-  public grade_opt;
+  public grade_opt1;
+  public grade_opt2;
 
   detail;
   detail_grade_sys;
@@ -54,16 +56,14 @@ export class SumgradedComponent implements OnInit {
   datesumed = new Date();
   choice;
   Pic;
-
+  grade_end;
   constructor(
-    private auth: AuthService,
     private afAuth: AngularFireAuth,
     private db: AngularFireDatabase,
     private global: GlobalService,
-    private upload: UploadService,
     private _route: ActivatedRoute,
     private router: Router,
-    private api: GradedService,
+    private apigrade: GradedService,
     private apisumgrade: SumgradeService
   ) {
     this._route.params.subscribe(params => {
@@ -72,22 +72,43 @@ export class SumgradedComponent implements OnInit {
     console.log(this.key);
   }
 
-  select_grade(grade_ex, grade_opt) {
+  select_grade(grade_ex) {
     this.grade_ex = grade_ex;
-    console.log(this.grade_ex);
-    this.grade_opt = grade_opt;
-    console.log(this.grade_opt);
+    this.grade_opt1 = grade_ex;
+    console.log('grade_ex: ', this.grade_ex);
+    console.log('grade_opt1: ', this.grade_opt1);
+  }
+  select_grade_opt2(grade_opt2) {
+ this.grade_opt1 = grade_opt2.target.value ;
+ this.grade_ex = this.grade_opt2;
+  console.log('grade_opt2: ', this.grade_opt2);
   }
   grade_choice(test) {
-    console.log('asas: ' + this.grade_sys);
+    console.log('grade_sys: ' + this.grade_sys);
+    console.log('grade_ex: ', this.grade_ex);
+    console.log('grade_opt1: ', this.grade_opt1);
+    console.log('grade_opt2: ', this.grade_opt2);
     console.log(test);
     this.choice = test;
     console.log(this.choice);
+    // if (this.choice === 1) {
+    //   this.datas[0].grade_con = this.grade_sys;
+    //   console.log(this.datas[0].grade_con);
+    //   this.grade_ex: this.grade_sys;
+    // } else if (this.choice === 2) {
+    //   this.datas[0].grade_con = this.grade_opt1;
+    //   console.log(this.datas[0].grade_con);
+    //   this.db.list('/graded').update(this.key, {grade_ex: this.grade_opt1});
+    // } else {
+    //   this.datas[0].grade_con = this.grade_opt2;
+    //   console.log(this.datas[0].grade_con);
+    //   this.db.list('/graded').update(this.key, {grade_ex: this.grade_opt2});
+    // }
 
   }
 
   ngOnInit() {
-    this.api.getDataByKey(this.key).subscribe(data => {
+    this.apigrade.getDataByKey(this.key).subscribe(data => {
       console.log(data);
       this.grade_sys = Object.keys(data).map(key => data[key])[0].grade_sys;
       this.Pic = Object.keys(data).map(key => data[key])[0].picture;
@@ -113,13 +134,60 @@ export class SumgradedComponent implements OnInit {
     this.datesumed = new Date();
   }
 
-  addUsers(data: NgForm) {
+  addUsers(datas: NgForm) {
+    if (this.choice === 1) {
+      console.log(this.grade_sys);
+     this.grade_end = this.grade_sys;
+
+     this.db.list('/graded').update(this.key, {grade_ex: this.grade_sys});
+    } else {
+      console.log(this.grade_opt1);
+      this.grade_end = this.grade_opt1;
+
+     this.db.list('/graded').update(this.key, {grade_ex: this.grade_opt1});
+    }
     swal({
-      title: 'กำลังบันทึกผลเกรด!',
+      title: 'กำลังบันทึกผลการสรุปเกรด!',
       timer: 2000,
       onOpen: () => {
         swal.showLoading();
+          // this.apigrade.editData(this.key, {
+          //   status: 'สรุปเกรดแล้ว',
+          //   date_sum: String(this.datesumed)
+          // }).subscribe();
 
+          this.apigrade.getDataByKey(this.key).subscribe(data1 => {
+            const value = Object.keys(data1).map(key => data1[key]);
+            console.log(datas.value);
+         //   value[0].status = 'ไม่ได้สรุปเกรด';
+            delete value[0].status;
+            value[0].sys_grage_sum_fn = this.userfirst;
+            value[0].sys_grage_sum_ln = this.userlast;
+            value[0].date_sum = String(this.datesumed);
+            value[0].grade_con = this.grade_end;
+            value[0].fn_ex1 = datas.value.fn_ex1;
+            value[0].ln_ex1 = datas.value.ln_ex1;
+            value[0].fn_ex2 = datas.value.fn_ex2;
+            value[0].ln_ex2 = datas.value.ln_ex2;
+            value[0].fn_ex3 = datas.value.fn_ex3;
+            value[0].ln_ex3 = datas.value.ln_ex3;
+            value[0].fn_ex4 = datas.value.fn_ex4;
+            value[0].ln_ex4 = datas.value.ln_ex4;
+            value[0].fn_ex5 = datas.value.fn_ex5;
+            value[0].ln_ex5 = datas.value.ln_ex5;
+            console.log(value[0]);
+            this.apisumgrade.addData(value[0]).subscribe();
+          });
+        // this.apisumgrade.getDataByKey(this.key).subscribe(data1 => {
+        //   const value = Object.keys(data1).map(key => data1[key]);
+        //   value[0].status = 'ไม่ได้สรุปเกรด';
+        //   value[0].date_sum = '';
+        //   value[0].grade_sys = this.grade;
+        //   value[0].datecuted = String(this.datesumed);
+        //   this.datas[0].fn_ex1 = data.value.fn_ex1;
+        //   console.log(value[0]);
+        //   this.apigrade.addData(value[0]).subscribe();
+        // });
       },
       onClose: () => {
         this.router.navigate(['/sumgrade']);
@@ -133,16 +201,7 @@ export class SumgradedComponent implements OnInit {
       }
     });
 
-    // this.apisumgrade.getDataByKey(this.key).subscribe(data1 => {
-    //   const value = Object.keys(data1).map(key => data1[key]);
-    //   value[0].picture = datas;
-    //   value[0].status = 'ไม่ได้สรุปเกรด';
-    //   value[0].date_sum = '';
-    //   value[0].grade_sys = this.grade;
-    //   value[0].datecuted = String(this.datesumed);
-    //   console.log(value[0]);
-    //   this.apigrade.addData(value[0]).subscribe();
-    // });
+// ///////asdasdasdasdas
 
     // this.db.list('/graded').update(this.key, {status: 'สรุปเกรดแล้ว'});
     // this.db.list('/graded').update(this.key, {date_sum: String(this.datesumed)});
@@ -162,6 +221,7 @@ export class SumgradedComponent implements OnInit {
     // this.datas[0].status = '';
     // this.datas[0].sys_grage_sum_fn = this.userfirst;
     // this.datas[0].sys_grage_sum_ln = this.userlast;
+
     // if (this.choice === 1) {
     //   this.datas[0].grade_con = this.grade_sys;
     //   console.log(this.datas[0].grade_con);
@@ -176,6 +236,7 @@ export class SumgradedComponent implements OnInit {
     //   this.db.list('/graded').update(this.key, {grade_ex: this.grade_opt});
     // }
     // console.log(this.datas[0]);
+
     // this.db.list('/summed').push(this.datas[0]);
     // swal({
     //   title: 'บันทึกสรุปเกรดสำเร็จ!',
