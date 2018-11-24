@@ -315,7 +315,29 @@ export class GradingComponent implements OnInit {
     // setTimeout(() => location.reload(), 700);
   }
 
-  test(c) {
-    this.checkProcess = c;
+  switch(c) {
+    console.log('page: ', c);
+    if (c === false) {
+      swal({
+        title: 'กำลังประมวณผลเกรด!',
+        // html: 'จะปิดเมื่อบันทึกเสร็จใน <strong></strong> วินาที.',
+        timer: 5000,
+        onOpen: () => {
+          swal.showLoading();
+
+        },
+        onClose: () => {
+          this.checkProcess = c;
+        }
+      }).then(result => {
+        if (
+          // Read more about handling dismissals
+          result.dismiss === swal.DismissReason.timer
+        ) {
+        }
+      });
+    } else {
+      this.checkProcess = c;
+    }
   }
 }

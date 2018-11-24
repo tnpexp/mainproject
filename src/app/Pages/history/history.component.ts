@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AngularFireList, AngularFireDatabase } from 'angularfire2/database';
+import { SumgradeService } from '../../services/API-sumgrade/sumgrade.service';
 
 @Component({
   selector: 'app-history',
@@ -8,21 +8,55 @@ import { AngularFireList, AngularFireDatabase } from 'angularfire2/database';
 })
 export class HistoryComponent implements OnInit {
 
-  datasumedlist: AngularFireList<any>;
-  datasumed: any[];
-  constructor(public db: AngularFireDatabase) {
-    this.datasumed = [];
-    this.datasumedlist = db.list('/summed');
-    this.datasumedlist.snapshotChanges().subscribe(actions => {
-      actions.forEach(action => {
-        const y  = action.payload.toJSON();
-        y['key'] = action.key;
-        this.datasumed.push(y as Listitemcattle);
-      });
-    });
+  data: any;
+  items = {
+    $key: '',
+    id: '',
+    left: '',
+    right: '',
+    datekil: '',
+    datedry: '',
+    dateready: '',
+    wleft: '',
+    wright: '',
+    roomdry: '',
+    owncattle: '',
+    status: '',
+    picture: '',
+
+    date_sum: '',
+    datecuted: '',
+    grade_ex: '',
+    grade_sys: '',
+    grade_con: '',
+
+    fn_ex1: '',
+    fn_ex2: '',
+    fn_ex3: '',
+    fn_ex4: '',
+    fn_ex5: '',
+    ln_ex1: '',
+    ln_ex2: '',
+    ln_ex3: '',
+    ln_ex4: '',
+    ln_ex5: '',
+    sys_grage_cut_fn: '',
+    sys_grage_cut_ln: '',
+    sys_grage_sum_fn: '',
+    sys_grage_sum_ln: ''
+  };
+
+  constructor(private api: SumgradeService) {
+
   }
 
   ngOnInit() {
+    this.api.showData().subscribe(data => {
+      this.data = Object.values(data);
+      for (let i = 0; i < Object.values(data).length; i++) {
+        this.data[i].key = Object.keys(data)[i];
+      }
+    });
   }
 
 }

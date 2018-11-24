@@ -49,8 +49,7 @@
             <thead class="thead text-dark" style="background-color: #ffffff;">
               <tr>
                 <td rowspan="1">ลำดับ</td>
-                <td rowspan="1">ชื่อ</td>
-                <th rowspan="1">นามสกุล</th>
+                <td rowspan="1">ชื่อ-นามสกุล</td>
                 <td rowspan="1">อีเมล</td>
                 <td rowspan="1">ชื่อผู้ใช้งาน/username</td>
                 <td rowspan="1">กำหนดสิทธิ์ผู้ใช้งาน</td>
@@ -61,8 +60,7 @@
             <tbody>
               <tr *ngFor="let data of data; let i = index">
                 <td>{{ i + 1 }}</td>
-                <td>{{ data.fname }}</td>
-                <td>{{ data.lname }}</td>
+                <td>{{ data.fname }}&nbsp;&nbsp;{{ data.lname }}</td>
                 <td>{{ data.email }}</td>
                 <td>{{ data.users }}</td>
                 <td>
