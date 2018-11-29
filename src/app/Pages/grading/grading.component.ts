@@ -29,10 +29,10 @@ const styles = (theme: ThemeVariables) => ({
   },
   range: {
     textAlign: 'center',
-    maxWidth: '400px'
+    maxWidth: '600px'
   },
   rangeInput: {
-    maxWidth: '350px',
+    maxWidth: '400px',
     margin: '1em 0',
 
     // http://brennaobrien.com/blog/2014/05/style-input-type-range-in-every-browser.html
@@ -135,6 +135,8 @@ const styles = (theme: ThemeVariables) => ({
 })
 export class GradingComponent implements OnInit {
   checkProcess = true;
+  switch_cap = true;
+  i;
   picName = 'เลือกไฟล์รูปภาพ';
   file;
   grade = '3';
@@ -166,21 +168,27 @@ export class GradingComponent implements OnInit {
     grade_sys: ''
   };
   event;
+  count = 0;
   private basePath = '/uploads';
 
   classes = this.theme.addStyleSheet(styles);
-  croppedImage: string;
+  croppedImage = [];
+
   result: string;
   scale: number;
   myConfig: ImgCropperConfig = {
     width: 250, // Default `250`
     height: 250, // Default `200`,
     output: {
-      width: 300,
-      height: 300
+      width: 200,
+      height: 200
     }
   };
   name_pic;
+  originalPic;
+  LinkOrginal: any;
+  LinkCrop = [];
+
   constructor(
     private db: AngularFireDatabase,
     private upload: UploadService,
@@ -198,15 +206,24 @@ export class GradingComponent implements OnInit {
     console.log(this.key);
   }
 
+test() {
+  console.log('asdasd');
+  this.croppedImage = [];
+  this.count = 0;
+  this.picName = '';
+}
+
   onCropped(e: ImgCropperEvent) {
-    this.croppedImage = e.dataURL;
+
+    this.croppedImage[this.count] = e.dataURL;
+    this.count++;
     this.picName = e.dataURL;
-    console.log('cropped img: ', e);
-    console.log('picName: ', this.picName);
+
   }
   onloaded(e: ImgCropperEvent) {
     console.log('img loaded', e);
     this.name_pic = e.name;
+    this.originalPic = e.originalDataURL;
   }
   onerror(e: ImgCropperEvent) {
     console.warn(`'${e.name}' is not a valid image`, e);
@@ -239,59 +256,110 @@ export class GradingComponent implements OnInit {
   onFileChanged(event) {
     this.event = event;
     this.file = event.target.files[0];
-    //  console.log(this.file);
     this.picName = this.file.name;
-    // this.upload.pushUpload(event.target.files[0]);
-    // this.uploadSingle();
   }
 
-  greaded(data: NgForm) {
-    this.upload.pushImageByBase64(this.name_pic, this.picName);
-    console.log(this.name_pic, this.picName);
-    // this.currentUpload = new Upload(this.file);
+  greaded(_data: NgForm) {
+    this.upload.pushImageByBase64(this.name_pic, this.originalPic, 'Original');
+    for (let i = 0; i < this.croppedImage.length; i++) {
+      this.upload.pushImageByBase64(this.name_pic, this.croppedImage[i], 'crop' + i);
+    }
+
     const storageRef = firebase.storage().ref();
-    // this.upload.pushUpload(this.currentUpload);
     swal({
       title: 'กำลังบันทึกผลเกรด!',
-      // html: 'จะปิดเมื่อบันทึกเสร็จใน <strong></strong> วินาที.',
-      timer: 5000,
+      timer: 10000,
       onOpen: () => {
         swal.showLoading();
         setTimeout(() => {
+
           storageRef
-            .child('uploads/' + this.name_pic)
+            .child('uploads/' + this.name_pic + '/Original')
             .getDownloadURL()
             .then(datas => {
               this.api
-                .editData(this.key, {
-                  status: this.grade,
-                  grade_sys: this.grade,
-                  datecuted: String(this.datecuted),
-                  picture: datas
-                })
-                .subscribe();
+              .editData(this.key, {
+                picture: datas,
+              })
+              .subscribe();
             });
             storageRef
-            .child('uploads/' + this.name_pic)
+            .child('uploads/' + this.name_pic + ('/crop0'))
             .getDownloadURL()
             .then(datas => {
-              this.api.getDataByKey(this.key).subscribe(data1 => {
-                const value = Object.keys(data1).map(key => data1[key]);
-                value[0].picture = datas;
-                value[0].status = 'ไม่ได้สรุปเกรด';
-                value[0].date_sum = '';
-                value[0].grade_sys = this.grade;
-                value[0].datecuted = String(this.datecuted);
-                value[0].sys_grage_cut_fn = this.userfirst;
-                value[0].sys_grage_cut_ln = this.userlast;
-                console.log(value[0]);
-                this.apigrade.addData(value[0]).subscribe();
-              });
+                  this.api
+              .editData(this.key, {
+                picCrop1: datas,
+              })
+              .subscribe();
             });
+            storageRef
+            .child('uploads/' + this.name_pic + ('/crop1'))
+            .getDownloadURL()
+            .then(datas => {
+                  this.api
+              .editData(this.key, {
+                picCrop2: datas,
+              })
+              .subscribe();
+            });
+            storageRef
+            .child('uploads/' + this.name_pic + ('/crop2'))
+            .getDownloadURL()
+            .then(datas => {
+                  this.api
+              .editData(this.key, {
+                picCrop3: datas,
+              })
+              .subscribe();
+            });
+            storageRef
+            .child('uploads/' + this.name_pic + ('/crop3'))
+            .getDownloadURL()
+            .then(datas => {
+                  this.api
+              .editData(this.key, {
+                picCrop4: datas,
+              })
+              .subscribe();
+            });
+            storageRef
+            .child('uploads/' + this.name_pic + ('/crop4'))
+            .getDownloadURL()
+            .then(datas => {
+                  this.api
+              .editData(this.key, {
+                status: this.grade,
+                grade_sys: this.grade,
+                datecuted: String(this.datecuted),
+                picCrop5: datas,
+              })
+              .subscribe();
+            });
+            setTimeout(() => {
+              storageRef
+              .child('uploads/' + this.name_pic + '/Original')
+              .getDownloadURL()
+              .then(datas => {
+                this.api.getDataByKey(this.key).subscribe(data1 => {
+                  const value = Object.keys(data1).map(key => data1[key]);
+                  value[0].picture = datas;
+                  value[0].status = 'ไม่ได้สรุปเกรด';
+                  value[0].date_sum = '';
+                  value[0].grade_sys = this.grade;
+                  value[0].datecuted = String(this.datecuted);
+                  value[0].sys_grage_cut_fn = this.userfirst;
+                  value[0].sys_grage_cut_ln = this.userlast;
+                  console.log(value[0]);
+                  this.apigrade.addData(value[0]).subscribe();
+                });
+              });
+          }, 5000);
         }, 5000);
       },
       onClose: () => {
         this.router.navigate(['/aboutcattle']);
+        // location.reload();
       }
     }).then(result => {
       if (
@@ -301,18 +369,6 @@ export class GradingComponent implements OnInit {
         console.log('I was closed by the timer');
       }
     });
-    // this.datas[0].datecuted = String(this.datecuted);
-    // this.datas[0].grade_sys = this.grade;
-    // this.datas[0].sys_grage_cut_fn = this.userfirst;
-    // this.datas[0].sys_grage_cut_ln = this.userlast;
-    // this.apiGrade.addData(this.datas[0]).subscribe();
-    // swal({
-    //   title: 'บันทึกเกรดสำเร็จ!',
-    //   text: '',
-    //   type: 'success'
-    // });
-    // this.router.navigate(['/aboutcattle']);
-    // setTimeout(() => location.reload(), 700);
   }
 
   switch(c) {
@@ -320,7 +376,6 @@ export class GradingComponent implements OnInit {
     if (c === false) {
       swal({
         title: 'กำลังประมวณผลเกรด!',
-        // html: 'จะปิดเมื่อบันทึกเสร็จใน <strong></strong> วินาที.',
         timer: 5000,
         onOpen: () => {
           swal.showLoading();
@@ -339,5 +394,8 @@ export class GradingComponent implements OnInit {
     } else {
       this.checkProcess = c;
     }
+  }
+  chang_cap(chang) {
+    this.switch_cap = chang;
   }
 }

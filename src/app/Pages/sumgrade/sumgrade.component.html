@@ -27,7 +27,12 @@
           <colgroup span="2"></colgroup>
           <thead class="thead text-dark" style="background-color: #ffffff;">
             <tr>
-              <td rowspan="2">ลำดับ</td>
+              <td rowspan="2">
+                <label>
+                  <input type="checkbox" (click)="checkAll_list()">
+                  <span class="label-text">ลำดับ</span>
+                </label>
+              </td>
               <td rowspan="2">รหัสโค</td>
               <th colspan="2">บาร์โค้ด</th>
               <td rowspan="2">วันที่เชือด</td>
@@ -53,7 +58,12 @@
 
           <tbody>
             <tr *ngFor="let data of data;let i = index">
-              <td>{{i+1}}</td>
+              <td>
+                <label>
+                  <input type="checkbox" (click)="selectMenu(data.key)" [checked]="c.check">
+                  <span class="label-text">{{i+1}}</span>
+                </label>
+              </td>
               <td>{{data.id}}</td>
               <td>{{data.left}}</td>
               <td>{{data.right}}</td>
@@ -79,6 +89,11 @@
             </tr>
           </tbody>
         </table>
+      </div>
+      <div class="card-footer" [hidden]="d.Delete == false && c.check == false">
+        <div [className]="classes.root">
+          <button ly-button style="width:30px"><i class="material-icons" style="color:#bd0000;font-size: 2rem">delete_forever</i></button>
+        </div>
       </div>
     </div>
   </div>

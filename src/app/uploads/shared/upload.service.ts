@@ -16,9 +16,10 @@ export class UploadService {
     storageRef.child(this.basePath + '/' + upload.file.name).put(upload.file);
   }
 
-  pushImageByBase64(namepic, images) {
+  pushImageByBase64(namepic, images, name) {
+
     const storageRef = firebase.storage().ref();
-    storageRef.child(this.basePath + '/' + namepic).putString(images, 'data_url').then(function(snapshot) {
+    storageRef.child(this.basePath + '/' + namepic + '/' + name).putString(images, 'data_url').then(function(snapshot) {
       console.log('Uploaded a data_url string!');
     });
   }

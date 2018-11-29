@@ -28,7 +28,13 @@ export class AboutCattleComponent implements OnInit {
   name: any;
   idcheck = [];
   selectQuestions: string[] = [];
-  a = 0;
+  a = {
+    checkprocess: false
+  };
+  d = {
+    Delete: false
+  };
+
   c = {
     check: false
   };
@@ -65,36 +71,42 @@ export class AboutCattleComponent implements OnInit {
   }
 
   checkAll_list() {
-/* checkbox ทั้งหมด */
+  /* checkbox ทั้งหมด */
     console.log(this.a);
-    if (this.a === 0) {
+    if (this.a.checkprocess === false) {
        this.c.check = true;
+      //  this.d.Delete = true;
        this.idcheck = [];
        this.data.forEach( a => {
           this.idcheck.push(a.key);
           this.selectQuestions.push(a.key);
        });
-       this.a = 1;
+       this.a.checkprocess = true;
     } else {
       this.c.check = false;
-      this.a = 0;
+      // this.d.Delete = false;
+      this.a.checkprocess = false;
       this.idcheck = [];
       this.selectQuestions = [];
     }
-    console.log(this.idcheck);
+    console.log('idcheck :', this.idcheck);
   }
 
-selectMenu(k) {
-/* checkbox ทีละตัว */
+  selectMenu(k) {
+  /* checkbox ทีละตัว */
     console.log(k);
     this.chk = this.selectQuestions.indexOf(k);
     if (this.chk >= 0) {
+      this.a.checkprocess = false;
+      this.d.Delete = false;
       this.idcheck.splice(this.chk, 1);
       this.selectQuestions.splice(this.chk, 1);
     } else {
+      this.a.checkprocess = true;
+      this.d.Delete = true;
       this.idcheck.push(k);
       this.selectQuestions.push(k);
     }
-    console.log(this.idcheck);
+    console.log('idcheck :', this.idcheck);
   }
 }

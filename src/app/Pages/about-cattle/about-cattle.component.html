@@ -64,7 +64,7 @@
             <tr *ngFor="let data of data;let i = index">
               <td>
                 <label>
-                  <input type="checkbox" (click)="selectMenu(data.key)">
+                  <input type="checkbox" (click)="selectMenu(data.key)" [checked]="c.check">
                   <span class="label-text">{{i+1}}</span>
                 </label>
               </td>
@@ -90,10 +90,11 @@
           </tbody>
         </table>
       </div>
-      <div class="card-footer">
+      <div class="card-footer" [hidden]="d.Delete == false && c.check == false">
         <div [className]="classes.root">
-        <button ly-button style="width:30px"><i class="material-icons" style="color:#bd0000;font-size: 2rem">delete_forever</i></button>
+          <button ly-button style="width:30px"><i class="material-icons" style="color:#bd0000;font-size: 2rem">delete_forever</i></button>
+        </div>
       </div>
-    </div>
+
   </div>
 </div>
